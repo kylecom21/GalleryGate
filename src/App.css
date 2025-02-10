@@ -1,0 +1,46 @@
+.App {
+    background-color: #F5F5F5 ;
+    min-height: 100vh;
+    font-family: 'Cardo', serif;
+}
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.2rem;
+    background-color: #2C3E50;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    border-bottom: 2px solid #A68A64;
+  }
+  
+  .title {
+    font-size: 2rem;
+    font-weight: bold;
+    color: white;
+    padding-left: 1.5rem;
+    font-family: 'Montserrat', sans-serif;
+  }
+  
+  .nav-links {
+    display: flex;
+    gap: 3rem;
+    list-style: none;
+    color: #A68A64;
+    padding-right: 2rem;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 100;
+
+  }
+  
+  .nav-link {
+    text-decoration: none;
+    font-size: 1.5rem;
+    color: white;
+    transition: color 0.3s;
+  }
+  
+  .nav-link:hover {
+    color: #A68A64
+  }
+  
+  
