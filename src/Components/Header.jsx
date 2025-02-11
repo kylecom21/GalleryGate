@@ -5,7 +5,7 @@ const Header = () => {
     return (
       <header className="header">
         <h1 className="title">
-          <Link to="/">Exhibitions</Link>
+          <Link to="/">GalleryGate</Link>
           </h1>
         <nav>
           <ul className="nav-links">

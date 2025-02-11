@@ -167,3 +167,49 @@
   text-decoration: underline;
   color: #A68A64;
 }
+
+.carousel-section {
+  width: 100%;
+  max-width: 100vw;
+  overflow: hidden;
+  background: linear-gradient(to bottom, rgba(0, 0, 0, 0.5), transparent);
+  padding-bottom: 20px; 
+}
+
+.carousel-slide {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.carousel-image {
+  width: 100%;
+  height: 69vh; 
+  object-fit: cover;
+  object-position: 50% 15%; 
+  filter: brightness(85%); 
+  border-bottom: 4px solid #b9975b; 
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2); 
+}
+
+.after-carousel {
+  text-align: center;
+  background: #f8f8f8; 
+}
+
+.page-title {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 3rem;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 10px;
+}
+
+.page-subtitle {
+  font-family: 'Cardo', serif;
+  font-size: 1.5rem;
+  color: #666;
+  max-width: 600px;
+  margin: 0 auto;
+}
