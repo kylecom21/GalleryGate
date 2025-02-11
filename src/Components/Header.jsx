@@ -4,7 +4,9 @@ import Logo from "../Assets/Logo.jpg"
 const Header = () => {
     return (
       <header className="header">
-        <h1 className="title">Exhibitions</h1>
+        <h1 className="title">
+          <Link to="/">Exhibitions</Link>
+          </h1>
         <nav>
           <ul className="nav-links">
             <li>
@@ -12,6 +14,9 @@ const Header = () => {
             </li>
             <li>
               <Link to="/exhibitions" className="nav-link">Exhibitions</Link>
+            </li>
+            <li>
+              <Link to="/search" className="nav-link">Search </Link>
             </li>
           </ul>
         </nav>
