@@ -204,6 +204,7 @@
   font-weight: bold;
   color: #333;
   margin-bottom: 10px;
+  margin-top: 40px;
 }
 
 .page-subtitle {
@@ -212,4 +213,64 @@
   color: #666;
   max-width: 600px;
   margin: 0 auto;
+  margin-bottom: 30px;
+}
+
+.featured-exhibitions {
+  padding: 2rem 1rem;
+  background-color: #ffffff;
+}
+
+.featured-exhibitions h2 {
+  text-align: center;
+  margin-bottom: 1.5rem;
+  border-bottom: 2px solid #A68A64;
+  padding-bottom: 0.5rem;
+}
+
+.exhibitions-grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1.5rem;
+}
+
+.exhibition-card {
+  background-color: white;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  overflow: hidden;
+  width: 400px;
+  height: auto;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  display: flex;
+  flex-direction: column;
+}
+
+.exhibition-image {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+}
+
+.exhibition-info {
+  padding: 1rem;
+}
+
+.exhibition-info h3 {
+  margin: 0 0 0.5rem;
+  font-size: 1.5rem;
+}
+
+.exhibition-info p {
+  font-size: 1rem;
+  margin: 0 0 1rem;
+}
+
+.btn-link {
+  background: none;
+  color: #A68A64;
+  text-decoration: underline;
+  font-size: 1rem;
+  padding: 0;
 }
