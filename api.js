@@ -50,28 +50,34 @@ const searchRijksMuseum = async (query) => {
   }
 };
 
-const fetchMetArtworks = async (page = 1, limit = 10) => {
+const fetchMetArtworks = async (page = 2, limit = 10) => {
   try {
     const response = await axios.get(
       `https://collectionapi.metmuseum.org/public/collection/v1/search?q=art&hasImages=true`
     );
 
     const objectIDs = response.data.objectIDs || [];
+    if (objectIDs.length === 0) return [];
+
     const paginatedIDs = objectIDs.slice((page - 1) * limit, page * limit);
 
-    const artworkPromises = paginatedIDs.map(async (id) => {
-      const artResponse = await axios.get(
-        `https://collectionapi.metmuseum.org/public/collection/v1/objects/${id}`
-      );
-      return artResponse.data;
-    });
+    const artworkPromises = paginatedIDs.map(async (id) =>
+      axios
+        .get(`https://collectionapi.metmuseum.org/public/collection/v1/objects/${id}`)
+        .then((res) => res.data)
+        .catch(() => null) 
+    );
 
-    return await Promise.all(artworkPromises);
+    const artworks = await Promise.allSettled(artworkPromises);
+    return artworks
+      .filter((art) => art.status === "fulfilled" && art.value?.primaryImage) // 
+      .map((art) => art.value);
   } catch (error) {
     console.error("Error fetching Met artworks:", error);
     return [];
   }
 };
+
 
 const fetchRijksArtworks = async (page = 1, limit = 10) => {
   try {

@@ -2,56 +2,60 @@ import { useState, useEffect } from "react";
 import { fetchMetArtworks, fetchRijksArtworks } from "../../api";
 
 const Artworks = () => {
-  const [metArtworks, setMetArtworks] = useState([]);
-  const [rijksArtworks, setRijksArtworks] = useState([]);
-  const [filteredArtworks, setFilteredArtworks] = useState([]);
-  const [sortOption, setSortOption] = useState("Title");
-  const [filter, setFilter] = useState("All");
-  const [page, setPage] = useState(1);
-  const limit = 10;
-
-  useEffect(() => {
-    const loadArtworks = async () => {
-      const metData = await fetchMetArtworks(page, limit);
-      const rijksData = await fetchRijksArtworks(page, limit);
-
-      setMetArtworks(metData || []);
-      setRijksArtworks(rijksData || []);
-
-      let combinedArtworks = [];
-      if (filter === "All") {
-        combinedArtworks = [...metData, ...rijksData];
-      } else if (filter === "Metropolitan") {
-        combinedArtworks = metData;
+    const [allArtworks, setAllArtworks] = useState([]); 
+    const [filteredArtworks, setFilteredArtworks] = useState([]); 
+    const [sortOption, setSortOption] = useState("Title");
+    const [filter, setFilter] = useState("All");
+    const [page, setPage] = useState(1);
+    const limit = 10;
+  
+    useEffect(() => {
+      const loadArtworks = async () => {
+        const metData = await fetchMetArtworks(1, 50); 
+        const rijksData = await fetchRijksArtworks(1, 50); 
+  
+        const combinedArtworks = [...metData, ...rijksData];
+        setAllArtworks(combinedArtworks);
+      };
+  
+      loadArtworks();
+    }, []);
+  
+    useEffect(() => {
+      let displayedArtworks = [...allArtworks];
+  
+      if (filter === "Metropolitan") {
+        displayedArtworks = allArtworks.filter((art) => art.primaryImage);
       } else if (filter === "Rijksmuseum") {
-        combinedArtworks = rijksData;
+        displayedArtworks = allArtworks.filter((art) => art.webImage?.url);
       }
+  
 
       if (sortOption === "Title") {
-        combinedArtworks.sort((a, b) => (a.title > b.title ? 1 : -1));
+        displayedArtworks.sort((a, b) => (a.title > b.title ? 1 : -1));
       } else if (sortOption === "Date") {
-        combinedArtworks.sort((a, b) => {
-          const dateA = a.objectDate ? new Date(a.objectDate) : new Date();
-          const dateB = b.objectDate ? new Date(b.objectDate) : new Date();
+        displayedArtworks.sort((a, b) => {
+          const dateA = new Date(a.objectDate || "1900"); 
+          const dateB = new Date(b.objectDate || "1900");
           return dateA - dateB;
         });
-      }
-
-      setFilteredArtworks(combinedArtworks);
-    };
-
-    loadArtworks();
-  }, [filter, sortOption, page]);
-
-  const handleFilterChange = (e) => {
-    const newFilter = e.target.value;
-    setFilter(newFilter);
-    if (newFilter === "Metropolitan") {
-      setPage(2);
-    } else {
-      setPage(1);
+      } else if (sortOption === "Artist") {
+        allArtworks.sort((a, b) => {
+          const artistA = a.artistDisplayName || "Unknown"; 
+          const artistB = b.artistDisplayName || "Unknown";
+          return artistA.localeCompare(artistB);
+        });
     }
-  };
+      const startIndex = (page - 1) * limit;
+      const paginatedArtworks = displayedArtworks.slice(startIndex, startIndex + limit);
+  
+      setFilteredArtworks(paginatedArtworks);
+    }, [filter, sortOption, page, allArtworks]);
+
+    const handleFilterChange = (e) => {
+        setFilter(e.target.value);
+        setPage(1);
+      };
 
   const handleSortChange = (e) => {
     setSortOption(e.target.value); 
@@ -60,37 +64,33 @@ const Artworks = () => {
   return (
     <div className="artworks-container">
       <h1>Artworks</h1>
-    <div className="filter-container">
-      <div className="filter-dropdown">
-        <label>Filter:</label>
-        <select onChange={handleFilterChange} value={filter}>
-          <option value="All">All</option>
-          <option value="Metropolitan">Metropolitan Museum</option>
-          <option value="Rijksmuseum">Rijksmuseum</option>
-        </select>
+      <div className="filter-container">
+        <div className="filter-dropdown">
+          <label>Filter:</label>
+          <select onChange={handleFilterChange} value={filter}>
+            <option value="All">All</option>
+            <option value="Metropolitan">Metropolitan Museum</option>
+            <option value="Rijksmuseum">Rijksmuseum</option>
+          </select>
+        </div>
+
+        <div className="filter-dropdown">
+          <label>Sort By:</label>
+          <select onChange={handleSortChange} value={sortOption}>
+            <option value="Title">Title</option>
+            <option value="Date">Date</option>
+            <option value="Artist">Artist</option> 
+          </select>
+        </div>
       </div>
 
-      <div className="filter-dropdown">
-        <label>Sort By:</label>
-        <select onChange={handleSortChange} value={sortOption}>
-          <option value="Title">Title</option>
-          <option value="Date">Date</option>
-        </select>
-      </div>
- </div>
       <section>
         <div className="artwork-list">
           {filteredArtworks.length > 0 ? (
             filteredArtworks.map((art) => (
-              <div
-                key={art.objectID || art.objectNumber}
-                className="artwork-item"
-              >
+              <div key={art.objectID || art.objectNumber} className="artwork-item">
                 {art.primaryImage || art.webImage?.url ? (
-                  <img
-                    src={art.primaryImage || art.webImage.url}
-                    alt={art.title}
-                  />
+                  <img src={art.primaryImage || art.webImage.url} alt={art.title} />
                 ) : (
                   <p>No image available</p>
                 )}
