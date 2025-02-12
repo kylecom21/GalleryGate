@@ -5,6 +5,7 @@ const Artworks = () => {
   const [metArtworks, setMetArtworks] = useState([]);
   const [rijksArtworks, setRijksArtworks] = useState([]);
   const [filteredArtworks, setFilteredArtworks] = useState([]);
+  const [sortOption, setSortOption] = useState("Title");
   const [filter, setFilter] = useState("All");
   const [page, setPage] = useState(1);
   const limit = 10;
@@ -16,23 +17,31 @@ const Artworks = () => {
 
       setMetArtworks(metData || []);
       setRijksArtworks(rijksData || []);
+
+      let combinedArtworks = [];
       if (filter === "All") {
-        setFilteredArtworks([...metData, ...rijksData]);
+        combinedArtworks = [...metData, ...rijksData];
+      } else if (filter === "Metropolitan") {
+        combinedArtworks = metData;
+      } else if (filter === "Rijksmuseum") {
+        combinedArtworks = rijksData;
       }
+
+      if (sortOption === "Title") {
+        combinedArtworks.sort((a, b) => (a.title > b.title ? 1 : -1));
+      } else if (sortOption === "Date") {
+        combinedArtworks.sort((a, b) => {
+          const dateA = a.objectDate ? new Date(a.objectDate) : new Date();
+          const dateB = b.objectDate ? new Date(b.objectDate) : new Date();
+          return dateA - dateB;
+        });
+      }
+
+      setFilteredArtworks(combinedArtworks);
     };
 
     loadArtworks();
-  }, [page]);
-
-  useEffect(() => {
-    if (filter === "All") {
-      setFilteredArtworks([...metArtworks, ...rijksArtworks]);
-    } else if (filter === "Metropolitan") {
-      setFilteredArtworks(metArtworks);
-    } else if (filter === "Rijksmuseum") {
-      setFilteredArtworks(rijksArtworks);
-    }
-  }, [filter, metArtworks, rijksArtworks]);
+  }, [filter, sortOption, page]);
 
   const handleFilterChange = (e) => {
     const newFilter = e.target.value;
@@ -44,10 +53,14 @@ const Artworks = () => {
     }
   };
 
+  const handleSortChange = (e) => {
+    setSortOption(e.target.value); 
+  };
+
   return (
     <div className="artworks-container">
       <h1>Artworks</h1>
-
+    <div className="filter-container">
       <div className="filter-dropdown">
         <label>Filter:</label>
         <select onChange={handleFilterChange} value={filter}>
@@ -57,6 +70,14 @@ const Artworks = () => {
         </select>
       </div>
 
+      <div className="filter-dropdown">
+        <label>Sort By:</label>
+        <select onChange={handleSortChange} value={sortOption}>
+          <option value="Title">Title</option>
+          <option value="Date">Date</option>
+        </select>
+      </div>
+ </div>
       <section>
         <div className="artwork-list">
           {filteredArtworks.length > 0 ? (

@@ -389,41 +389,48 @@
   padding: 20px;
 }
 
+.filter-container {
+  display: flex;
+  justify-content: center; 
+  gap: 20px; 
+  padding: 20px;
+}
+
 .filter-dropdown {
   display: flex;
-  justify-content: flex-end; 
-  margin-top: 20px;
-  margin-right: 20px; 
-  padding: 10px; 
-  border-radius: 5px; 
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
+  flex-direction: row;  
+  justify-content: center;  
+  padding: 10px;
+  border-radius: 5px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   align-items: center;
+  width: 250px; 
+  margin: 0 10px;  
 }
 
 .filter-dropdown label {
-  font-family: 'Montserrat', sans-serif; 
+  font-family: 'Montserrat', sans-serif;
   font-size: 1rem;
-  color: #2C3E50; 
-  margin-right: 10px; 
+  color: #2C3E50;
+  margin-right: 10px;
 }
 
 .filter-dropdown select {
-  padding: 10px 15px; 
-  font-size: 1rem;
-  border: 1px solid #ddd; 
+  padding: 10px 15px;
+  font-size: 0.7rem;
+  border: 1px solid #ddd;
   border-radius: 4px;
-  background-color: #f5f5f5; 
-  color: #333; 
+  background-color: #f5f5f5;
+  color: #333;
   transition: border-color 0.3s ease, background-color 0.3s ease;
+  width: 60%;
 }
 
 .filter-dropdown select:focus {
-  outline: none; 
-  border-color: #A68A64; 
-  background-color: #fff; 
+  outline: none;
+  border-color: #A68A64;
+  background-color: #fff;
 }
-
-
 
 .pagination button {
   background-color: #5a4635;
