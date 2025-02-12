@@ -6,7 +6,6 @@ const rijksApiUrl = 'https://www.rijksmuseum.nl/api/en/collection';
 
 const searchMetMuseum = async (query) => {
   try {
-    // Use the correct URL for searching
     const response = await axios.get(`${metApiUrl}/search`, {
       params: {
         q: query,
@@ -14,15 +13,12 @@ const searchMetMuseum = async (query) => {
       },
     });
 
-    // Check if there are any object IDs returned
     if (!response.data.objectIDs) {
       return [];
     }
 
-    // Limit the results to avoid too many requests
     const objectIDs = response.data.objectIDs.slice(0, 10);
 
-    // Fetch detailed data for each object
     const artworkDetails = await Promise.all(
       objectIDs.map(async (id) => {
         const detailResponse = await axios.get(`${metApiUrl}/objects/${id}`);
@@ -33,7 +29,7 @@ const searchMetMuseum = async (query) => {
     return artworkDetails;
   } catch (error) {
     console.error("Error fetching data from the Met Museum:", error);
-    return []; // Return an empty array to prevent crashes
+    return []; 
   }
 };
 
@@ -54,5 +50,40 @@ const searchRijksMuseum = async (query) => {
   }
 };
 
+const fetchMetArtworks = async (page = 1, limit = 10) => {
+  try {
+    const response = await axios.get(
+      `https://collectionapi.metmuseum.org/public/collection/v1/search?q=art&hasImages=true`
+    );
 
-export {searchMetMuseum, searchRijksMuseum,};
+    const objectIDs = response.data.objectIDs || [];
+    const paginatedIDs = objectIDs.slice((page - 1) * limit, page * limit);
+
+    const artworkPromises = paginatedIDs.map(async (id) => {
+      const artResponse = await axios.get(
+        `https://collectionapi.metmuseum.org/public/collection/v1/objects/${id}`
+      );
+      return artResponse.data;
+    });
+
+    return await Promise.all(artworkPromises);
+  } catch (error) {
+    console.error("Error fetching Met artworks:", error);
+    return [];
+  }
+};
+
+const fetchRijksArtworks = async (page = 1, limit = 10) => {
+  try {
+    const response = await axios.get(
+      `https://www.rijksmuseum.nl/api/en/collection?key=LGjWsRbT&ps=${limit}&p=${page}`
+    );
+    return response.data.artObjects;
+  } catch (error) {
+    console.error("Error fetching Rijks artworks:", error);
+    return [];
+  }
+};
+
+
+export {searchMetMuseum, searchRijksMuseum, fetchRijksArtworks, fetchMetArtworks};

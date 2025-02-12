@@ -312,3 +312,129 @@
 .footer-links a:hover {
   color: white;
 }
+
+.artworks-container {
+  text-align: center;
+  padding: 40px;
+  background-color: #f5f3ee;
+  color: #333; 
+}
+
+.artworks-container h1 {
+
+  font-size: 3rem;
+  margin-bottom: 10px;
+}
+
+.artwork-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 30px;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+}
+
+.artwork-item {
+  background: #ffffff; 
+  padding: 15px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  transition: transform 0.2s ease-in-out;
+}
+
+.artwork-item:hover {
+  transform: scale(1.03);
+}
+
+.artwork-item img {
+  width: 100%;
+  height: auto;
+  max-height: 300px;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+.artwork-item p {
+  font-size: 1.1rem;
+  margin-top: 10px;
+  font-weight: 500;
+  font-family: 'Cardo', serif;
+}
+.filter-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.filter-buttons button {
+  background-color: #5a4635;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: 0.3s;
+}
+
+.filter-buttons button.active,
+.filter-buttons button:hover {
+  background-color: #8b6f4d;
+}
+
+.artworks-container {
+  text-align: center;
+  padding: 20px;
+}
+
+.filter-dropdown {
+  display: flex;
+  justify-content: flex-end; 
+  margin-top: 20px;
+  margin-right: 20px; 
+  padding: 10px; 
+  border-radius: 5px; 
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
+  align-items: center;
+}
+
+.filter-dropdown label {
+  font-family: 'Montserrat', sans-serif; 
+  font-size: 1rem;
+  color: #2C3E50; 
+  margin-right: 10px; 
+}
+
+.filter-dropdown select {
+  padding: 10px 15px; 
+  font-size: 1rem;
+  border: 1px solid #ddd; 
+  border-radius: 4px;
+  background-color: #f5f5f5; 
+  color: #333; 
+  transition: border-color 0.3s ease, background-color 0.3s ease;
+}
+
+.filter-dropdown select:focus {
+  outline: none; 
+  border-color: #A68A64; 
+  background-color: #fff; 
+}
+
+
+
+.pagination button {
+  background-color: #5a4635;
+  color: white;
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.pagination button:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
