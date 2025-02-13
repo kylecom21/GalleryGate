@@ -445,3 +445,63 @@
   background-color: #ccc;
   cursor: not-allowed;
 }
+
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.6); 
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.modal-content {
+  background: white;
+  padding: 20px;
+  border-radius: 10px;
+  max-height: 80vh;
+  max-width: 500px; 
+  width: 90%; 
+  overflow-y: auto;
+  text-align: center;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
+  position: relative;
+}
+
+.modal-content img {
+  max-width: 100%;
+  max-height: 50vh; 
+  height: auto;
+  border-radius: 5px;
+}
+
+.modal-content h2 {
+  font-size: 1.5rem;
+  margin: 10px 0;
+}
+
+.modal-content p {
+  font-size: 1rem;
+  color: #444;
+  margin: 5px 0;
+}
+
+.close-btn {
+  position: absolute;
+  top: 5px;
+  right: 1px;
+  background: none;
+  border: none;
+  font-size: 1.1rem;
+  cursor: pointer;
+  color: #333;
+}
+
+
+
+
+
