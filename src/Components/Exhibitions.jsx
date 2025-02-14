@@ -89,9 +89,13 @@ const Exhibitions = () => {
             {exhibition.artworks.map((artwork) => (
               <li key={artwork.id} className="artwork-item">
                 <img
-                  src={artwork.image}
-                  alt={artwork.title}
+                  src={
+                    artwork.primaryImage ||
+                    artwork.webImage?.url
+                  }
+                  alt={artwork.title || "Untitled"}
                   className="artwork-image"
+                  width="100"
                 />
                 <p className="artwork-info">
                   {artwork.title} by {artwork.artist}
