@@ -501,7 +501,164 @@
   color: #333;
 }
 
+.exhibitions-container {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: var(--background-color, #f5f5f5);
+  color: var(--text-color, #333);
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
 
+.exhibition-header {
+  text-align: center;
+  margin-bottom: 20px;
+}
 
+.exhibition-header h2 {
+  font-size: 1.8rem;
+  font-weight: bold;
+  color: var(--heading-color, #222);
+}
+
+.exhibition-input {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.exhibition-input input {
+  width: 60%;
+  padding: 10px;
+  font-size: 1rem;
+  border: 2px solid var(--primary-color, #ddd);
+  border-radius: 8px;
+  outline: none;
+  transition: border 0.3s ease-in-out;
+}
+
+.exhibition-input input:focus {
+  border-color: var(--primary-hover, #ddd);
+}
+
+.create-exhibition-btn {
+  background-color: var(--primary-color, #A68A64);
+  color: white;
+  padding: 10px 16px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: background 0.3s ease-in-out;
+}
+
+.create-exhibition-btn:hover {
+  background-color: var(--primary-hover, #8a6d50);
+}
+
+.exhibition-card {
+  background-color: white;
+  padding: 15px;
+  border-radius: 10px;
+  margin-bottom: 20px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.exhibition-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.exhibition-card h3 {
+  font-size: 1.4rem;
+  color: var(--heading-color, #222);
+}
+
+.delete-exhibition-btn {
+  background-color: var(--danger-color, #A68A64);
+  color: white;
+  padding: 6px 12px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: background 0.3s ease-in-out;
+}
+
+.delete-exhibition-btn:hover {
+  background-color: var(--danger-hover, #8a6d50);
+}
+
+.exhibition-selection {
+  margin-top: 15px;
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+}
+
+.exhibition-selection select {
+  padding: 5px;
+  font-size: 16px;
+}
+
+.exhibition-selection button {
+  background-color: #A68A64;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.exhibition-selection button:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+.success-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.success-modal-content {
+  background-color: white;
+  padding: 20px;
+  border-radius: 8px;
+  width: 80%;
+  max-width: 500px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  position: relative;
+  z-index: 1001;
+  text-align: center;
+}
+
+.success-modal-content h3 {
+  margin-bottom: 20px;
+}
+
+.success-modal-content .close-btn {
+  padding: 3px;
+  background-color: #5a4635;
+  color: white;
+  border: none;
+  cursor: pointer;
+  font-size: 0.8rem;
+  border-radius: 5px;
+}
+
+.success-modal-content .close-btn:hover {
+  background-color: #4a3a2d;
+}
 
 
