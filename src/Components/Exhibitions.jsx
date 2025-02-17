@@ -1,8 +1,14 @@
 import { useState, useEffect } from "react";
+import Slider from "react-slick";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
+import ArtworkModal from "./ArtworkModal";
 
 const Exhibitions = () => {
   const [exhibitions, setExhibitions] = useState([]);
   const [newExhibitionName, setNewExhibitionName] = useState("");
+  const [selectedExhibition, setSelectedExhibition] = useState(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   useEffect(() => {
     const savedExhibitions = JSON.parse(localStorage.getItem("exhibitions"));
@@ -28,27 +34,14 @@ const Exhibitions = () => {
     setExhibitions(exhibitions.filter((exhibition) => exhibition.id !== id));
   };
 
-  const addArtworkToExhibition = (exhibitionId, artwork) => {
-    setExhibitions(
-      exhibitions.map((exhibition) =>
-        exhibition.id === exhibitionId
-          ? { ...exhibition, artworks: [...exhibition.artworks, artwork] }
-          : exhibition
-      )
-    );
+  const openModal = (exhibition) => {
+    setSelectedExhibition(exhibition);
+    setIsModalOpen(true);
   };
 
-  const removeArtworkFromExhibition = (exhibitionId, artworkId) => {
-    setExhibitions(
-      exhibitions.map((exhibition) =>
-        exhibition.id === exhibitionId
-          ? {
-              ...exhibition,
-              artworks: exhibition.artworks.filter((a) => a.id !== artworkId),
-            }
-          : exhibition
-      )
-    );
+  const closeModal = () => {
+    setIsModalOpen(false);
+    setSelectedExhibition(null);
   };
 
   return (
@@ -85,34 +78,59 @@ const Exhibitions = () => {
               Delete
             </button>
           </div>
-          <ul className="artworks-list">
-            {exhibition.artworks.map((artwork) => (
-              <li key={artwork.id} className="artwork-item">
-                <img
-                  src={
-                    artwork.primaryImage ||
-                    artwork.webImage?.url
-                  }
-                  alt={artwork.title || "Untitled"}
-                  className="artwork-image"
-                  width="100"
-                />
-                <p className="artwork-info">
-                  {artwork.title} by {artwork.artist}
-                </p>
-                <button
-                  className="remove-artwork-btn"
-                  onClick={() =>
-                    removeArtworkFromExhibition(exhibition.id, artwork.id)
-                  }
-                >
-                  Remove
-                </button>
-              </li>
-            ))}
-          </ul>
+          {exhibition.artworks.length > 0 && (
+            <div className="artwork-preview">
+              <img
+                src={
+                  exhibition.artworks[0].primaryImage ||
+                  exhibition.artworks[0].webImage?.url
+                }
+                alt={exhibition.artworks[0].title || "Untitled"}
+                className="artwork-image"
+              />
+              <button
+                className="show-more-btn"
+                onClick={() => openModal(exhibition)}
+              >
+                Show More
+              </button>
+            </div>
+          )}
         </div>
       ))}
+
+      {isModalOpen && selectedExhibition && (
+        <div className="modal-overlay" onClick={closeModal}>
+          <div className="modal-content" onClick={(e) => e.stopPropagation()}>
+            <button className="close-btn" onClick={closeModal}>
+              ✖
+            </button>
+            <Slider
+              dots
+              infinite
+              speed={500}
+              slidesToShow={1}
+              slidesToScroll={1}
+            >
+              {selectedExhibition.artworks.map((artwork) => (
+                <div key={artwork.id} className="ex-carousel-item">
+                  <img
+                    src={artwork.primaryImage || artwork.webImage?.url}
+                    alt={artwork.title || "Untitled"}
+                    className="ex-carousel-image"
+                  />
+                  <p>
+                    <strong>{artwork.title}</strong> by{" "}
+                    {artwork.artistDisplayName ||
+                      artwork.principalOrFirstMaker ||
+                      "Unknown"}
+                  </p>
+                </div>
+              ))}
+            </Slider>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

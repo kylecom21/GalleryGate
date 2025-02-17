@@ -493,7 +493,7 @@
 
 .close-btn {
   position: absolute;
-  top: 5px;
+  top: 0px;
   right: 1px;
   background: none;
   border: none;
@@ -589,6 +589,18 @@
   transition: background 0.3s ease-in-out;
 }
 
+.show-more-btn {
+  background-color: var(--danger-color, #A68A64);
+  color: white;
+  padding: 6px 12px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: background 0.3s ease-in-out;
+  margin-top: auto;
+}
+
 .delete-exhibition-btn:hover {
   background-color: var(--danger-hover, #8a6d50);
 }
@@ -617,6 +629,18 @@
 .exhibition-selection button:disabled {
   background-color: #ccc;
   cursor: not-allowed;
+}
+
+.artwork-preview {
+  display: flex;
+  flex-direction: column;  
+  align-items: center;     
+}
+
+.artwork-image {
+  width: 80%; 
+  height: auto; 
+  margin-bottom: 10px; 
 }
 
 .success-modal-overlay {
@@ -662,4 +686,73 @@
   background-color: #4a3a2d;
 }
 
+.success-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1001;
+}
+
+.success-modal-content {
+  background: white;
+  padding: 15px;
+  border-radius: 8px;
+  text-align: center;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  max-width: 300px;
+}
+
+.success-modal-content h3 {
+  font-size: 16px;
+  color: var(--heading-color, #222);
+}
+
+.success-modal-content .close-btn {
+  background-color: var(--primary-color, #A68A64);
+  color: white;
+  padding: 6px 10px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  margin-top: 10px;
+}
+
+.success-modal-content .close-btn:hover {
+  background-color: var(--primary-hover, #8a6d50);
+}
+
+.close-success-btn {
+    position: absolute;
+    top: 6px;
+    right: 4px;
+    background: none;
+    border: none;
+    font-size: 1.7rem;
+    cursor: pointer;
+    color: #333;
+    padding: 3px;
+    background-color: var(--primary-color, #A68A64);
+    color: white;
+    border: none;
+    cursor: pointer;
+    font-size: 0.8rem;
+    border-radius: 5px;
+}
+
+.ex-carousel-image{
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+  object-position: center;
+  filter: brightness(85%); 
+  border-bottom: 4px solid #b9975b; 
+  box-shadow: 0px 4px 8px rgba(0, 0, 0.2, 0.2); 
+  padding-bottom: 10px;
+}
 
