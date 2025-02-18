@@ -65,52 +65,52 @@ const Exhibitions = () => {
           </button>
         </div>
       </div>
-
-      {exhibitions.map((exhibition) => (
-        <div key={exhibition.id} className="exhibition-card">
-          <div className="exhibition-card-header">
-            <h3>{exhibition.name}</h3>
-            <button
-              className="delete-exhibition-btn"
-              onClick={() => deleteExhibition(exhibition.id)}
-            >
-              Delete
-            </button>
-          </div>
-          {exhibition.artworks.length > 0 && (
-            <div className="artwork-preview">
-              <img
-                src={
-                  exhibition.artworks[0].primaryImage ||
-                  exhibition.artworks[0].webImage?.url
-                }
-                alt={exhibition.artworks[0].title || "Untitled"}
-                className="artwork-image"
-              />
-              <button
-                className="show-more-btn"
-                onClick={() => openModal(exhibition)}
-              >
-                Show More
-              </button>
-            </div>
-          )}
+  
+      <div className="exhibitions-grid">
+  {exhibitions.map((exhibition, index) => (
+    <div
+      key={exhibition.id}
+      className={`exhibition-card ${index % 2 === 0 ? "right" : "left"}`}
+    >
+      <div className="exhibition-card-header">
+        <h3>{exhibition.name}</h3>
+        <button
+          className="delete-exhibition-btn"
+          onClick={() => deleteExhibition(exhibition.id)}
+        >
+          Delete
+        </button>
+      </div>
+      {exhibition.artworks.length > 0 && (
+        <div className="artwork-preview">
+          <img
+            src={
+              exhibition.artworks[0].primaryImage ||
+              exhibition.artworks[0].webImage?.url
+            }
+            alt={exhibition.artworks[0].title || "Untitled"}
+            className="artwork-image"
+          />
+          <button
+            className="show-more-btn"
+            onClick={() => openModal(exhibition)}
+          >
+            Show More
+          </button>
         </div>
-      ))}
+      )}
+    </div>
+  ))}
+</div>
 
+  
       {isModalOpen && selectedExhibition && (
         <div className="modal-overlay" onClick={closeModal}>
           <div className="modal-content" onClick={(e) => e.stopPropagation()}>
             <button className="close-btn" onClick={closeModal}>
               ✖
             </button>
-            <Slider
-              dots
-              infinite
-              speed={500}
-              slidesToShow={1}
-              slidesToScroll={1}
-            >
+            <Slider dots infinite speed={500} slidesToShow={1} slidesToScroll={1}>
               {selectedExhibition.artworks.map((artwork) => (
                 <div key={artwork.id} className="ex-carousel-item">
                   <img
