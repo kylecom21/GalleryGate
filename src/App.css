@@ -216,25 +216,6 @@
   margin-bottom: 30px;
 }
 
-.featured-exhibitions {
-  padding: 2rem 1rem;
-  background-color: #ffffff;
-}
-
-.featured-exhibitions h2 {
-  text-align: center;
-  margin-bottom: 1.5rem;
-  border-bottom: 2px solid #A68A64;
-  padding-bottom: 0.5rem;
-}
-
-.exhibitions-grid {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 1.5rem;
-}
-
 .exhibition-card {
   background-color: white;
   border: 1px solid #ddd;
@@ -247,25 +228,6 @@
   flex-direction: column;
 }
 
-.exhibition-image {
-  width: 100%;
-  height: 200px;
-  object-fit: cover;
-}
-
-.exhibition-info {
-  padding: 1rem;
-}
-
-.exhibition-info h3 {
-  margin: 0 0 0.5rem;
-  font-size: 1.5rem;
-}
-
-.exhibition-info p {
-  font-size: 1rem;
-  margin: 0 0 1rem;
-}
 
 .btn-link {
   background: none;
@@ -571,11 +533,13 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+  font-family: 'Montserrat', sans-serif;
 }
 
 .exhibition-card h3 {
-  font-size: 1.4rem;
-  color: var(--heading-color, #222);
+  font-size: 1.5rem;
+  color:#333;
+  padding-left: 8%;
 }
 
 .delete-exhibition-btn {
@@ -755,4 +719,45 @@
   box-shadow: 0px 4px 8px rgba(0, 0, 0.2, 0.2); 
   padding-bottom: 10px;
 }
+
+.artwork-of-the-day {
+  text-align: center;
+  margin: 20px auto;
+  padding: 20px;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  background: #fff;
+  max-width: 60%;
+  font-family: 'Cardo', serif;  
+  font-size: 1.1rem;
+}
+
+.h3-of-the-day{
+  font-family: 'cardo', serif;
+  font-weight: bolder;
+  font-size: 1.4rem;
+}
+
+.artwork-of-the-day-image {
+  width: 100%;
+  max-height: 500px;
+  object-fit: cover;
+  object-fit: contain;
+  object-position: center;
+  border-radius: 5px;
+}
+
+.artwork-of-the-day-image:hover {
+  transform: scale(1.02);
+  transition: 0.3s ease-in-out;
+}
+
+.title-of-the-day {
+  font-size: 2rem;
+  font-family: 'Montserrat', sans-serif;
+  text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
+  display: inline-block;
+  padding-bottom: 5px;
+}
+
 

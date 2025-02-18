@@ -68,7 +68,7 @@ const Artworks = () => {
   const handleArtworkClick = async (artwork) => {
     if (!artwork) return;
   
-    console.log('Artwork URL:', artwork.links?.self);  // Log the URL
+    console.log('Artwork URL:', artwork.links?.self);  
     
     if (artwork.links?.self === `http://www.rijksmuseum.nl/api/en/collection/${artwork.objectNumber}`) {
       const rijksDetails = await fetchRijksArtworkDetails(artwork.objectNumber);
