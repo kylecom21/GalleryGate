@@ -10,11 +10,11 @@ import ArtworkSpotlight from "./ArtworkSpotlight";
 
 const Home = () => {
   const carouselImages = [
-    metHeavenly,
-    vermeer,
-    rijksMuseum,
-    rijksArt,
-    metInterior,
+    { src: metHeavenly, alt: "Heavenly artwork from the Met Museum" },
+    { src: vermeer, alt: "Famous Vermeer painting" },
+    { src: rijksMuseum, alt: "Rijksmuseum Library interior" },
+    { src: rijksArt, alt: "Dutch artwork from the Rijksmuseum" },
+    { src: metInterior, alt: "Inside view of the Met Museum" },
   ];
 
   const sliderSettings = {
@@ -26,6 +26,7 @@ const Home = () => {
     autoplay: true,
     autoplaySpeed: 4000,
     fade: true,
+    accessibility: true,
   };
 
   return (
@@ -35,8 +36,8 @@ const Home = () => {
           {carouselImages.map((image, index) => (
             <div key={index} className="carousel-slide">
               <img
-                src={image}
-                alt={`Slide ${index + 1}`}
+                src={image.src}
+                alt={image.alt}
                 className="carousel-image"
               />
             </div>

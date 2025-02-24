@@ -4,34 +4,55 @@ import { fetchMetArtworks, fetchRijksArtworks, fetchRijksArtworkDetails } from "
 const ArtworkSpotlight = () => {
   const [artwork, setArtwork] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
-  const fetchRandomArtwork = async () => {
+  const fetchRandomArtwork = async (retryCount = 3) => {
     setLoading(true);
+    setError(null);
 
     const sources = [fetchMetArtworks, fetchRijksArtworks];
-    const randomSource = sources[Math.floor(Math.random() * sources.length)];
+    let attempts = 0;
 
-    const artworks = await randomSource(1, 10);
-    if (artworks.length > 0) {
-      let randomArtwork = artworks[Math.floor(Math.random() * artworks.length)];
+    while (attempts < retryCount) {
+      try {
+        const randomSource = sources[Math.floor(Math.random() * sources.length)];
+        const artworks = await randomSource(1, 10);
 
-      if (randomArtwork.objectNumber) {
-        const rijksDetails = await fetchRijksArtworkDetails(randomArtwork.objectNumber);
-        randomArtwork = { ...randomArtwork, ...rijksDetails };
+        if (artworks.length > 0) {
+          let randomArtwork = artworks[Math.floor(Math.random() * artworks.length)];
+
+          if (randomArtwork.objectNumber) {
+            const rijksDetails = await fetchRijksArtworkDetails(randomArtwork.objectNumber);
+            randomArtwork = { ...randomArtwork, ...rijksDetails };
+          }
+
+          if (randomArtwork.primaryImage || randomArtwork.webImage?.url) {
+            setArtwork(randomArtwork);
+            setLoading(false);
+            return;
+          }
+        }
+      } catch (err) {
+        console.error("Error fetching artwork:", err);
       }
 
-      setArtwork(randomArtwork);
+      attempts++;
     }
 
     setLoading(false);
+    setError("Unable to load artwork. Please try again later.");
   };
 
   useEffect(() => {
     fetchRandomArtwork();
   }, []);
 
-  if (loading || !artwork) {
-    return <p>Loading artwork...</p>;
+  if (loading) {
+    return <p className="loading">Loading artwork...</p>;
+  }
+
+  if (error) {
+    return <p className="error-message">{error}</p>;
   }
 
   return (
@@ -42,12 +63,16 @@ const ArtworkSpotlight = () => {
           src={artwork.primaryImage || artwork.webImage?.url}
           alt={artwork.title || "Artwork"}
           className="artwork-of-the-day-image"
+          onError={(e) => (e.target.src = "/placeholder.jpg")}
         />
       ) : null}
       <h3 className="h3-of-the-day">{artwork.title || "Untitled"}</h3>
       <p><strong>Artist:</strong> {artwork.artistDisplayName || artwork.principalOrFirstMaker || "Unknown"}</p>
       <p><strong>Year:</strong> {artwork.objectDate || artwork.dating?.presentingDate || "N/A"}</p>
       <p><strong>Medium:</strong> {artwork.medium || artwork.physicalMedium || "N/A"}</p>
+      <button onClick={() => fetchRandomArtwork()} className="show-more-btn">
+        Show Another Artwork
+      </button>
     </div>
   );
 };

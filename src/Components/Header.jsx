@@ -1,27 +1,42 @@
-import { Link } from "react-router-dom"
-import Logo from "../Assets/Logo.jpg"
+import { Link, useLocation } from "react-router-dom";
 
 const Header = () => {
-    return (
-      <header className="header">
-        <h1 className="title">
-          <Link to="/">GalleryGate</Link>
-          </h1>
-        <nav>
-          <ul className="nav-links">
-            <li>
-              <Link to="/artworks" className="nav-link">Artworks</Link>
-            </li>
-            <li>
-              <Link to="/exhibitions" className="nav-link">Exhibitions</Link>
-            </li>
-            <li>
-              <Link to="/search" className="nav-link">Search </Link>
-            </li>
-          </ul>
-        </nav>
-      </header>
-    );
-  };
+  const location = useLocation();
+  return (
+    <header className="header">
+      <h1 className="title">
+        <Link to="/">GalleryGate</Link>
+      </h1>
+      <nav>
+        <ul className="nav-links">
+          <li>
+            <Link
+              to="/artworks"
+              className={`nav-link ${location.pathname === "/artworks" ? "active" : ""}`}
+            >
+              Artworks
+            </Link>
+          </li>
+          <li>
+            <Link
+              to="/exhibitions"
+              className={`nav-link ${location.pathname === "/exhibitions" ? "active" : ""}`}
+            >
+              Exhibitions
+            </Link>
+          </li>
+          <li>
+            <Link
+              to="/search"
+              className={`nav-link ${location.pathname === "/search" ? "active" : ""}`}
+            >
+              Search
+            </Link>
+          </li>
+        </ul>
+      </nav>
+    </header>
+  );
+};
 
-export default Header   
+export default Header;

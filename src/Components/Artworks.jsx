@@ -1,5 +1,9 @@
 import { useState, useEffect } from "react";
-import { fetchMetArtworks, fetchRijksArtworks, fetchRijksArtworkDetails } from "../../api";
+import {
+  fetchMetArtworks,
+  fetchRijksArtworks,
+  fetchRijksArtworkDetails,
+} from "../../api";
 import ArtworkModal from "./ArtworkModal";
 
 const Artworks = () => {
@@ -67,10 +71,13 @@ const Artworks = () => {
 
   const handleArtworkClick = async (artwork) => {
     if (!artwork) return;
-  
-    console.log('Artwork URL:', artwork.links?.self);  
-    
-    if (artwork.links?.self === `http://www.rijksmuseum.nl/api/en/collection/${artwork.objectNumber}`) {
+
+    console.log("Artwork URL:", artwork.links?.self);
+
+    if (
+      artwork.links?.self ===
+      `http://www.rijksmuseum.nl/api/en/collection/${artwork.objectNumber}`
+    ) {
       const rijksDetails = await fetchRijksArtworkDetails(artwork.objectNumber);
       setSelectedArtwork(rijksDetails);
     } else {
@@ -83,8 +90,12 @@ const Artworks = () => {
       <h1>Artworks</h1>
       <div className="filter-container">
         <div className="filter-dropdown">
-          <label>Filter:</label>
-          <select onChange={handleFilterChange} value={filter}>
+          <label htmlFor="filter-select">Filter:</label>
+          <select
+            id="filter-select"
+            onChange={handleFilterChange}
+            value={filter}
+          >
             <option value="All">All</option>
             <option value="Metropolitan">Metropolitan Museum</option>
             <option value="Rijksmuseum">Rijksmuseum</option>
@@ -92,8 +103,12 @@ const Artworks = () => {
         </div>
 
         <div className="filter-dropdown">
-          <label>Sort By:</label>
-          <select onChange={handleSortChange} value={sortOption}>
+          <label htmlFor="sort-select">Sort By:</label>
+          <select
+            id="sort-select"
+            onChange={handleSortChange}
+            value={sortOption}
+          >
             <option value="Title">Title</option>
             <option value="Date">Date</option>
             <option value="Artist">Artist</option>
@@ -109,6 +124,7 @@ const Artworks = () => {
                 key={art.objectID || art.objectNumber}
                 className="artwork-item"
                 onClick={() => handleArtworkClick(art)}
+                tabIndex={0}
               >
                 {art.primaryImage || art.webImage?.url ? (
                   <img
@@ -134,11 +150,21 @@ const Artworks = () => {
       </section>
 
       <div className="pagination">
-        <button onClick={() => setPage(page - 1)} disabled={page === 1}>
+        <button
+          onClick={() => setPage(page - 1)}
+          disabled={page === 1}
+          aria-label="Previous page"
+        >
           Previous
         </button>
         <span>Page {page}</span>
-        <button onClick={() => setPage(page + 1)}>Next</button>
+        <button
+          onClick={() => setPage(page + 1)}
+          disabled={filteredArtworks.length < limit}
+          aria-label="Next page"
+        >
+          Next
+        </button>
       </div>
     </div>
   );
