@@ -51,6 +51,6 @@ The app should now be running at `http://localhost:5173/`
 
 ## 🌍 Deployment
 
-### Live Demo: [YourLiveSite.com](https://yourlivesite.com)
+### Live Demo: [gallerygate.netlify.app](https://gallerygate.netlify.app)
 
 
