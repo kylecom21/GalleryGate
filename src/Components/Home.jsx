@@ -6,7 +6,7 @@ import vermeer from "/src/assets/vermeer.jpeg";
 import rijksArt from "/src/assets/rijks-art.jpeg";
 import rijksMuseum from "/src/assets/Rijks_Museum_Library.jpg";
 import metInterior from "/src/assets/met-interior.jpg";
-import ArtworkSpotlight from "/ArtworkSpotlight";
+import ArtworkSpotlight from "./ArtworkSpotlight";
 
 const Home = () => {
   const carouselImages = [
