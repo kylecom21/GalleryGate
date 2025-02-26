@@ -1,12 +1,12 @@
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import metHeavenly from "../assets/Met-heavenly.jpg";
-import vermeer from "../assets/vermeer.jpeg";
-import rijksArt from "../assets/rijks-art.jpeg";
-import rijksMuseum from "../assets/Rijks_Museum_Library.jpg";
-import metInterior from "../assets/met-interior.jpg";
-import ArtworkSpotlight from "./ArtworkSpotlight";
+import metHeavenly from "/src/assets/Met-heavenly.jpg";
+import vermeer from "/src/assets/vermeer.jpeg";
+import rijksArt from "/src/assets/rijks-art.jpeg";
+import rijksMuseum from "/src/assets/Rijks_Museum_Library.jpg";
+import metInterior from "/src/assets/met-interior.jpg";
+import ArtworkSpotlight from "/ArtworkSpotlight";
 
 const Home = () => {
   const carouselImages = [
