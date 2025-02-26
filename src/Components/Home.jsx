@@ -1,20 +1,15 @@
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import metHeavenly from "../assets/Met-heavenly.jpg"; 
-import vermeer from "../assets/vermeer.jpeg";
-import rijksArt from "../assets/rijks-art.jpeg";
-import rijksMuseum from "../assets/Rijks_Museum_Library.jpg";
-import metInterior from "../assets/met-interior.jpg";
 import ArtworkSpotlight from "./ArtworkSpotlight";
 
 const Home = () => {
   const carouselImages = [
-    { src: metHeavenly, alt: "Heavenly artwork from the Met Museum" },
-    { src: vermeer, alt: "Famous Vermeer painting" },
-    { src: rijksMuseum, alt: "Rijksmuseum Library interior" },
-    { src: rijksArt, alt: "Dutch artwork from the Rijksmuseum" },
-    { src: metInterior, alt: "Inside view of the Met Museum" },
+    { src: "/Met-heavenly.jpg", alt: "Heavenly artwork from the Met Museum" },
+    { src: "/vermeer.jpeg", alt: "Famous Vermeer painting" },
+    { src: "/Rijks_Museum_Library.jpg", alt: "Rijksmuseum Library interior" },
+    { src: "/rijks-art.jpeg", alt: "Dutch artwork from the Rijksmuseum" },
+    { src: "/met-interior.jpg", alt: "Inside view of the Met Museum" },
   ];
 
   const sliderSettings = {
