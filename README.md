@@ -7,7 +7,7 @@ A web-based platform that allows users to explore, discover, and create their ow
 ## 📽️ Video Walkthrough
 
 _A video walkthrough highlighting key features of the platform is available here:_
-[Video Link](#)
+[Video Link](https://youtu.be/QdHtOxT0ack)
 
 ---
 
