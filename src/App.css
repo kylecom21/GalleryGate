@@ -134,12 +134,15 @@
 }
 
 .artwork-image {
-  width: 100px; 
-  height: auto;
+  width: 150px !important; 
+  height: 150px !important;
+  object-fit: cover !important;
   margin-right: 1rem;
   border: 1px solid #ddd;
   border-radius: 4px;
+  display: block;
 }
+
 
 .placeholder-image {
   width: 100px;
