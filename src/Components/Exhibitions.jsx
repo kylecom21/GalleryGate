@@ -69,6 +69,33 @@ const Exhibitions = () => {
     return () => window.removeEventListener("keydown", handleKeyDown);
   }, [isModalOpen]);
 
+  const removeArtwork = (artworkId) => {
+    setExhibitions((prevExhibitions) => {
+      const updatedExhibitions = prevExhibitions.map((exhibition) =>
+        exhibition.id === selectedExhibition.id
+          ? {
+              ...exhibition,
+              artworks: exhibition.artworks.filter(
+                (artwork) => artwork.id !== artworkId
+              ),
+            }
+          : exhibition
+      );
+  
+      const updatedSelectedExhibition = updatedExhibitions.find(
+        (exhibition) => exhibition.id === selectedExhibition.id
+      );
+  
+      setSelectedExhibition(updatedSelectedExhibition);
+      return updatedExhibitions;
+    });
+  };
+  
+
+  useEffect(() => {
+    localStorage.setItem("exhibitions", JSON.stringify(exhibitions));
+  }, [exhibitions]);
+
   return (
     <div className="exhibitions-container">
       <div className="exhibition-header">
@@ -156,6 +183,12 @@ const Exhibitions = () => {
                       artwork.principalOrFirstMaker ||
                       "Unknown"}
                   </p>
+                  <button
+                    className="remove-artwork-btn"
+                    onClick={() => removeArtwork(artwork.id)}
+                  >
+                    Remove 
+                  </button>
                 </div>
               ))}
             </Slider>

@@ -796,4 +796,16 @@
   padding-bottom: 5px;
 }
 
+.remove-artwork-btn {
+  background: #A68A64;
+  border: none;
+  font-size: 1rem;
+  cursor: pointer;
+  color: white;
+  font-size: 1rem;
+  transition: color 0.3s ease;
+  border-radius: 5px;
+  padding: 10px;
+  margin-top: 12px;
+}
 
