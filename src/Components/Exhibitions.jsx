@@ -11,20 +11,40 @@ const Exhibitions = () => {
   const [errorMessage, setErrorMessage] = useState("");
 
   useEffect(() => {
-    const savedExhibitions =
-      JSON.parse(localStorage.getItem("exhibitions")) || [];
-    setExhibitions(savedExhibitions);
+    try {
+      const savedExhibitions = JSON.parse(localStorage.getItem("exhibitions"));
+      if (Array.isArray(savedExhibitions)) {
+        setExhibitions(savedExhibitions);
+      } else {
+        setExhibitions([]);
+      }
+    } catch (error) {
+      console.error("Failed to parse exhibitions from localStorage:", error);
+      setExhibitions([]);
+    }
   }, []);
 
   useEffect(() => {
-    if (exhibitions.length > 0) {
+    try {
       localStorage.setItem("exhibitions", JSON.stringify(exhibitions));
+    } catch (error) {
+      console.error("Error saving exhibitions to localStorage:", error);
     }
   }, [exhibitions]);
+  
 
   const createExhibition = () => {
     if (!newExhibitionName.trim()) {
       setErrorMessage("Exhibition name cannot be empty!");
+      return;
+    }
+
+    if (
+      exhibitions.some(
+        (ex) => ex.name.toLowerCase() === newExhibitionName.trim().toLowerCase()
+      )
+    ) {
+      setErrorMessage("An exhibition with this name already exists!");
       return;
     }
 
@@ -81,20 +101,20 @@ const Exhibitions = () => {
             }
           : exhibition
       );
-  
+
       const updatedSelectedExhibition = updatedExhibitions.find(
         (exhibition) => exhibition.id === selectedExhibition.id
       );
-  
-      setSelectedExhibition(updatedSelectedExhibition);
+
+      if (updatedSelectedExhibition?.artworks.length === 0) {
+        closeModal();
+      } else {
+        setSelectedExhibition(updatedSelectedExhibition);
+      }
+
       return updatedExhibitions;
     });
   };
-  
-
-  useEffect(() => {
-    localStorage.setItem("exhibitions", JSON.stringify(exhibitions));
-  }, [exhibitions]);
 
   return (
     <div className="exhibitions-container">
@@ -187,7 +207,7 @@ const Exhibitions = () => {
                     className="remove-artwork-btn"
                     onClick={() => removeArtwork(artwork.id)}
                   >
-                    Remove 
+                    Remove
                   </button>
                 </div>
               ))}

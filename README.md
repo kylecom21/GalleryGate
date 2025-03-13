@@ -21,6 +21,15 @@ _A video walkthrough highlighting key features of the platform is available here
 
 ---
 
+## 💾 Data Persistence  
+
+- Your exhibitions are **automatically saved** in your browser’s **local storage**.  
+- This means your exhibitions **will still be there** even if you close and reopen the site.  
+- However, clearing your browser’s cache **will remove** all saved exhibitions.  
+- Your exhibitions **won’t sync across different devices or browsers**.
+
+---
+
 ## 🛠️ Running the Project Locally
 
 ### 1️⃣ Clone the Repository

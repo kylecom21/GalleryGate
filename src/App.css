@@ -783,11 +783,6 @@
   border-radius: 5px;
 }
 
-.artwork-of-the-day-image:hover {
-  transform: scale(1.02);
-  transition: 0.3s ease-in-out;
-}
-
 .title-of-the-day {
   font-size: 2rem;
   font-family: 'Montserrat', sans-serif;
