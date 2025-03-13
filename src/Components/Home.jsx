@@ -1,6 +1,8 @@
-import Slider from "react-slick";
-import "slick-carousel/slick/slick.css";
-import "slick-carousel/slick/slick-theme.css";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Autoplay, Pagination, EffectFade, A11y } from "swiper/modules";
+import "swiper/css";
+import "swiper/css/pagination";
+import "swiper/css/effect-fade";
 import ArtworkSpotlight from "./ArtworkSpotlight";
 
 const Home = () => {
@@ -9,35 +11,30 @@ const Home = () => {
     { src: "/vermeer.jpeg", alt: "Famous Vermeer painting" },
     { src: "/Rijks_Museum_Library.jpg", alt: "Rijksmuseum Library interior" },
     { src: "/rijks-art.jpeg", alt: "Dutch artwork from the Rijksmuseum" },
-    { src: "/met-interior.jpg", alt: "Inside view of the Met Museum" },
+    { src: "/Met-interior.jpg", alt: "Inside view of the Met Museum" },
   ];
-
-  const sliderSettings = {
-    dots: true,
-    infinite: true,
-    speed: 500,
-    slidesToShow: 1,
-    slidesToScroll: 1,
-    autoplay: true,
-    autoplaySpeed: 4000,
-    fade: true,
-    accessibility: true,
-  };
 
   return (
     <div className="home-container">
       <section className="carousel-section">
-        <Slider {...sliderSettings}>
+        <Swiper
+          modules={[Autoplay, Pagination, EffectFade, A11y]}
+          spaceBetween={0}
+          slidesPerView={1}
+          loop={true}
+          autoplay={{ delay: 4000, disableOnInteraction: false }}
+          pagination={{ clickable: true }}
+          effect="fade"
+          a11y={true}
+          className="custom-swiper"
+          style={{ paddingBottom: "20px" }}
+        >
           {carouselImages.map((image, index) => (
-            <div key={index} className="carousel-slide">
-              <img
-                src={image.src}
-                alt={image.alt}
-                className="carousel-image"
-              />
-            </div>
+            <SwiperSlide key={index} className="carousel-slide">
+              <img src={image.src} alt={image.alt} className="carousel-image" />
+            </SwiperSlide>
           ))}
-        </Slider>
+        </Swiper>
       </section>
       <div className="after-carousel">
         <h1 className="page-title">Welcome to GalleryGate</h1>
