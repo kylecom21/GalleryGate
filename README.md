@@ -4,12 +4,49 @@ A web-based platform that allows users to explore, discover, and create their ow
 
 ---
 
+## 🌍 Deployment
+
+### Live Demo: [gallerygate.netlify.app](https://gallerygate.netlify.app)
+
+---
+
 ## 📽️ Video Walkthrough
 
 _A video walkthrough highlighting key features of the platform is available here:_
 [Video Link](https://youtu.be/QdHtOxT0ack)
 
+## 🔍 What is GalleryGate?
+
+GalleryGate is a **virtual exhibition curator**, allowing users to browse famous artworks, save their favorites, and organise them into **custom exhibitions**.  
+The goal is to provide an engaging way to explore art collections and curate personalised galleries.  
+
 ---
+
+## 🛠️ How It Works
+
+1. **Search & Discover** – Users can browse artworks from **two major museums**, filtering by artist, title, and date.  
+2. **Create Exhibitions** – Users can add artworks to their own virtual gallery spaces.  
+3. **Save & Manage** – Exhibitions are **saved in the browser's local storage**, allowing users to revisit their curated collections.  
+4. **Artwork Details** – Clicking on an artwork opens a modal which shows some information.  
+
+
+---
+
+## 🏗️ How It Was Built
+
+### **Tech Stack**
+- **Frontend:** React + JavaScript + Axios + Swiper
+- **Styling:** CSS  
+- **Extras:** dotenv + Vite + 
+
+
+### **APIs Used**
+- **Metropolitan Museum of Art API** – Provides access to thousands of artworks.  
+- **Rijksmuseum API** – Delivers data on Dutch masterpieces.  
+
+### **Key Challenges & Solutions**
+- **Handling API inconsistencies** – The two museum APIs structure their data differently. So I had to make sure my code catered to both APIs.
+- **Managing state persistence** – Used **local storage** to save exhibitions, ensuring users don’t lose progress when refreshing.  
 
 ##  Features
 
@@ -57,9 +94,4 @@ npm run dev
 The app should now be running at `http://localhost:5173/`
 
 ---
-
-## 🌍 Deployment
-
-### Live Demo: [gallerygate.netlify.app](https://gallerygate.netlify.app)
-
 

@@ -1,7 +1,9 @@
 import { useState, useEffect, useCallback } from "react";
-import Slider from "react-slick";
-import "slick-carousel/slick/slick.css";
-import "slick-carousel/slick/slick-theme.css";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Navigation, Pagination } from "swiper/modules";
+import "swiper/css";
+import "swiper/css/navigation";
+import "swiper/css/pagination";
 
 const Exhibitions = () => {
   const [exhibitions, setExhibitions] = useState([]);
@@ -31,7 +33,6 @@ const Exhibitions = () => {
       console.error("Error saving exhibitions to localStorage:", error);
     }
   }, [exhibitions]);
-  
 
   const createExhibition = () => {
     if (!newExhibitionName.trim()) {
@@ -183,35 +184,38 @@ const Exhibitions = () => {
             <button className="close-btn" onClick={closeModal}>
               ✖
             </button>
-            <Slider
-              dots
-              infinite
-              speed={500}
-              slidesToShow={1}
-              slidesToScroll={1}
+            <Swiper
+              modules={[Pagination]}
+              pagination={{ clickable: true }}
+              spaceBetween={10}
+              slidesPerView={1}
+              style={{ paddingBottom: "40px" }}
+              className="custom-swiper"
             >
               {selectedExhibition.artworks.map((artwork) => (
-                <div key={artwork.id} className="ex-carousel-item">
-                  <img
-                    src={artwork.primaryImage || artwork.webImage?.url}
-                    alt={artwork.title || "Untitled"}
-                    className="ex-carousel-image"
-                  />
-                  <p>
-                    <strong>{artwork.title}</strong> by{" "}
-                    {artwork.artistDisplayName ||
-                      artwork.principalOrFirstMaker ||
-                      "Unknown"}
-                  </p>
-                  <button
-                    className="remove-artwork-btn"
-                    onClick={() => removeArtwork(artwork.id)}
-                  >
-                    Remove
-                  </button>
-                </div>
+                <SwiperSlide key={artwork.id}>
+                  <div className="ex-carousel-item">
+                    <img
+                      src={artwork.primaryImage || artwork.webImage?.url}
+                      alt={artwork.title || "Untitled"}
+                      className="ex-carousel-image"
+                    />
+                    <p>
+                      <strong>{artwork.title}</strong> by{" "}
+                      {artwork.artistDisplayName ||
+                        artwork.principalOrFirstMaker ||
+                        "Unknown"}
+                    </p>
+                    <button
+                      className="remove-artwork-btn"
+                      onClick={() => removeArtwork(artwork.id)}
+                    >
+                      Remove
+                    </button>
+                  </div>
+                </SwiperSlide>
               ))}
-            </Slider>
+            </Swiper>
           </div>
         </div>
       )}

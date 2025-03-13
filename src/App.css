@@ -100,7 +100,7 @@
 }
 
 .search-container button:hover {
-  background-color: #8a6d50; /
+  background-color: #8a6d50; 
 }
 
 .error {
@@ -804,3 +804,7 @@
   margin-top: 12px;
 }
 
+.custom-swiper .swiper-pagination {
+  position: absolute !important; 
+  bottom: -5px !important;        
+}
