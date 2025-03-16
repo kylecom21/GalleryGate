@@ -11,6 +11,7 @@ const Artworks = () => {
   const [filteredArtworks, setFilteredArtworks] = useState([]);
   const [sortOption, setSortOption] = useState("Title");
   const [filter, setFilter] = useState("All");
+  const [searchQuery, setSearchQuery] = useState("");
   const [selectedArtwork, setSelectedArtwork] = useState(null);
   const [page, setPage] = useState(1);
   const limit = 10;
@@ -19,7 +20,6 @@ const Artworks = () => {
     const loadArtworks = async () => {
       const metData = await fetchMetArtworks(1, 50);
       const rijksData = await fetchRijksArtworks(1, 50);
-
       const combinedArtworks = [...metData, ...rijksData];
       setAllArtworks(combinedArtworks);
     };
@@ -31,9 +31,19 @@ const Artworks = () => {
     let displayedArtworks = [...allArtworks];
 
     if (filter === "Metropolitan") {
-      displayedArtworks = allArtworks.filter((art) => art.primaryImage);
+      displayedArtworks = displayedArtworks.filter((art) => art.primaryImage);
     } else if (filter === "Rijksmuseum") {
-      displayedArtworks = allArtworks.filter((art) => art.webImage?.url);
+      displayedArtworks = displayedArtworks.filter((art) => art.webImage?.url);
+    }
+
+    if (searchQuery) {
+      displayedArtworks = displayedArtworks.filter((art) =>
+        [art.title, art.artistDisplayName, art.objectDate]
+          .filter(Boolean)
+          .some((field) =>
+            field.toLowerCase().includes(searchQuery.toLowerCase())
+          )
+      );
     }
 
     if (sortOption === "Title") {
@@ -45,12 +55,13 @@ const Artworks = () => {
         return dateA - dateB;
       });
     } else if (sortOption === "Artist") {
-      allArtworks.sort((a, b) => {
+      displayedArtworks.sort((a, b) => {
         const artistA = a.artistDisplayName || "Unknown";
         const artistB = b.artistDisplayName || "Unknown";
         return artistA.localeCompare(artistB);
       });
     }
+
     const startIndex = (page - 1) * limit;
     const paginatedArtworks = displayedArtworks.slice(
       startIndex,
@@ -58,28 +69,12 @@ const Artworks = () => {
     );
 
     setFilteredArtworks(paginatedArtworks);
-  }, [filter, sortOption, page, allArtworks]);
-
-  const handleFilterChange = (e) => {
-    setFilter(e.target.value);
-    setPage(1);
-  };
-
-  const handleSortChange = (e) => {
-    setSortOption(e.target.value);
-  };
+  }, [filter, sortOption, searchQuery, page, allArtworks]);
 
   const handleArtworkClick = async (artwork) => {
-    if (!artwork) return;
-
-    console.log("Artwork URL:", artwork.links?.self);
-
-    if (
-      artwork.links?.self ===
-      `http://www.rijksmuseum.nl/api/en/collection/${artwork.objectNumber}`
-    ) {
-      const rijksDetails = await fetchRijksArtworkDetails(artwork.objectNumber);
-      setSelectedArtwork(rijksDetails);
+    if (artwork.objectNumber) {
+      const details = await fetchRijksArtworkDetails(artwork.objectNumber);
+      setSelectedArtwork(details);
     } else {
       setSelectedArtwork(artwork);
     }
@@ -88,12 +83,27 @@ const Artworks = () => {
   return (
     <div className="artworks-container">
       <h1>Artworks</h1>
+
       <div className="filter-container">
+        <div className="filter-dropdown">
+          <label htmlFor="search-input">Search:</label>
+          <input
+            type="text"
+            id="search-input"
+            placeholder="Search artworks..."
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+          />
+        </div>
+
         <div className="filter-dropdown">
           <label htmlFor="filter-select">Filter:</label>
           <select
             id="filter-select"
-            onChange={handleFilterChange}
+            onChange={(e) => {
+              setFilter(e.target.value);
+              setPage(1);
+            }}
             value={filter}
           >
             <option value="All">All</option>
@@ -106,7 +116,7 @@ const Artworks = () => {
           <label htmlFor="sort-select">Sort By:</label>
           <select
             id="sort-select"
-            onChange={handleSortChange}
+            onChange={(e) => setSortOption(e.target.value)}
             value={sortOption}
           >
             <option value="Title">Title</option>
@@ -138,9 +148,10 @@ const Artworks = () => {
               </div>
             ))
           ) : (
-            <p>Loading artworks...</p>
+            <p>No artworks found.</p>
           )}
         </div>
+
         {selectedArtwork && (
           <ArtworkModal
             artwork={selectedArtwork}
