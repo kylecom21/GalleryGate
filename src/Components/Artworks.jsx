@@ -18,9 +18,20 @@ const Artworks = () => {
 
   useEffect(() => {
     const loadArtworks = async () => {
-      const metData = await fetchMetArtworks(1, 50);
-      const rijksData = await fetchRijksArtworks(1, 50);
-      const combinedArtworks = [...metData, ...rijksData];
+      const metData = await fetchMetArtworks(1, 250);
+      const rijksData = await fetchRijksArtworks(1, 250);
+
+      const rijksDetailedData = await Promise.all(
+        rijksData.map(async (art) => {
+          if (art.objectNumber) {
+            const details = await fetchRijksArtworkDetails(art.objectNumber);
+            return { ...art, physicalMedium: details?.physicalMedium || "N/A" };
+          }
+          return art;
+        })
+      );
+
+      const combinedArtworks = [...metData, ...rijksDetailedData];
       setAllArtworks(combinedArtworks);
     };
 
@@ -29,47 +40,52 @@ const Artworks = () => {
 
   useEffect(() => {
     let displayedArtworks = [...allArtworks];
-
+  
     if (filter === "Metropolitan") {
       displayedArtworks = displayedArtworks.filter((art) => art.primaryImage);
     } else if (filter === "Rijksmuseum") {
       displayedArtworks = displayedArtworks.filter((art) => art.webImage?.url);
     }
-
+  
     if (searchQuery) {
-      displayedArtworks = displayedArtworks.filter((art) =>
-        [art.title, art.artistDisplayName, art.objectDate]
-          .filter(Boolean)
-          .some((field) =>
-            field.toLowerCase().includes(searchQuery.toLowerCase())
-          )
-      );
+      const searchLower = searchQuery.toLowerCase();
+  
+      displayedArtworks = displayedArtworks.filter((art) => {
+        return (
+          (art.title?.toLowerCase().includes(searchLower) || 
+            art.longTitle?.toLowerCase().includes(searchLower)) || 
+          (art.artistDisplayName?.toLowerCase().includes(searchLower) || 
+            art.principalOrFirstMaker?.toLowerCase().includes(searchLower)) || 
+          (art.objectDate?.toLowerCase().includes(searchLower) || 
+            art.dating?.presentingDate?.toLowerCase().includes(searchLower)) || 
+          (art.medium?.toLowerCase().includes(searchLower) || 
+            art.physicalMedium?.toLowerCase().includes(searchLower)) 
+        );
+      });
     }
 
     if (sortOption === "Title") {
       displayedArtworks.sort((a, b) => (a.title > b.title ? 1 : -1));
     } else if (sortOption === "Date") {
       displayedArtworks.sort((a, b) => {
-        const dateA = new Date(a.objectDate || "1900");
-        const dateB = new Date(b.objectDate || "1900");
+        const dateA = new Date(a.objectDate || a.dating?.presentingDate || "1900");
+        const dateB = new Date(b.objectDate || b.dating?.presentingDate || "1900");
         return dateA - dateB;
       });
     } else if (sortOption === "Artist") {
       displayedArtworks.sort((a, b) => {
-        const artistA = a.artistDisplayName || "Unknown";
-        const artistB = b.artistDisplayName || "Unknown";
+        const artistA = a.artistDisplayName || a.principalOrFirstMaker || "Unknown";
+        const artistB = b.artistDisplayName || b.principalOrFirstMaker || "Unknown";
         return artistA.localeCompare(artistB);
       });
     }
-
+  
     const startIndex = (page - 1) * limit;
-    const paginatedArtworks = displayedArtworks.slice(
-      startIndex,
-      startIndex + limit
-    );
-
+    const paginatedArtworks = displayedArtworks.slice(startIndex, startIndex + limit);
+  
     setFilteredArtworks(paginatedArtworks);
   }, [filter, sortOption, searchQuery, page, allArtworks]);
+  
 
   const handleArtworkClick = async (artwork) => {
     if (artwork.objectNumber) {
