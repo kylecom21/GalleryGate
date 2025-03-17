@@ -808,3 +808,15 @@
   position: absolute !important; 
   bottom: -5px !important;        
 }
+
+#search-input {
+  border: none;
+  border-bottom: 2px solid #333; 
+  outline: none;                 
+  background: transparent;        
+  font-size: 16px;
+  padding: 5px 10px;
+  width: 100%;
+  max-width: 250px;
+  transition: border-color 0.3s ease-in-out;
+}
