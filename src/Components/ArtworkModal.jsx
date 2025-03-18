@@ -38,9 +38,14 @@ const ArtworkModal = ({ artwork, onClose }) => {
   const addToExhibition = () => {
     if (!selectedExhibition) return;
 
+    const artworkWithId = {
+      ...artwork,
+      id: artwork.id || `artwork-${Date.now()}`,
+    };
+
     const updatedExhibitions = exhibitions.map((exhibition) =>
       exhibition.id === selectedExhibition
-        ? { ...exhibition, artworks: [...exhibition.artworks, artwork] }
+        ? { ...exhibition, artworks: [...exhibition.artworks, artworkWithId] }
         : exhibition
     );
 
