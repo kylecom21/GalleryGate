@@ -10,6 +10,16 @@ A web-based platform that allows users to explore, discover, and create their ow
 
 ---
 
+## Recent Changes
+- Combined Search & Artworks Page. The Search functionality is now integrated into the Artworks Page.
+- Removed Search.jsx and updated navigation accordingly.
+- Implemented a remove button for each artwork in an exhibition.
+- Removed image hover effects on homepage.
+- Fixed crash issues when refreshing the application.
+- Clarified local storage usage for saving exhibitions and artworks page.
+
+---
+
 ## 📽️ Video Walkthrough
 
 _A video walkthrough highlighting key features of the platform is available here:_
