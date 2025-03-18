@@ -37,7 +37,7 @@ The goal is to provide an engaging way to explore art collections and curate per
 ### **Tech Stack**
 - **Frontend:** React + JavaScript + Axios + Swiper
 - **Styling:** CSS  
-- **Extras:** dotenv + Vite + 
+- **Extras:** dotenv + Vite 
 
 
 ### **APIs Used**
@@ -60,6 +60,8 @@ The goal is to provide an engaging way to explore art collections and curate per
 
 ## 💾 Data Persistence  
 
+- Artworks are cached using local storage to improve loading speed and reduce API requests.
+- Cached artworks expire after 24 hours, ensuring users get updated data regularly.
 - Your exhibitions are **automatically saved** in your browser’s **local storage**.  
 - This means your exhibitions **will still be there** even if you close and reopen the site.  
 - However, clearing your browser’s cache **will remove** all saved exhibitions.  

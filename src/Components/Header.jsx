@@ -25,14 +25,6 @@ const Header = () => {
               Exhibitions
             </Link>
           </li>
-          <li>
-            <Link
-              to="/search"
-              className={`nav-link ${location.pathname === "/search" ? "active" : ""}`}
-            >
-              Search
-            </Link>
-          </li>
         </ul>
       </nav>
     </header>
